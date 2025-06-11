@@ -5,7 +5,7 @@
 ### 1. Bundle Size Issues
 - **Problem**: Initial bundle exceeded 500KB budget by 440KB
 - **Solution**: Increased budget limits in `angular.json` to realistic values for Angular Material apps
-- **Changes**: 
+- **Changes**:
   - Initial bundle limit: 500KB → 1MB (warning), 1MB → 2MB (error)
   - Component style limit: 4KB → 10KB (warning), 8KB → 20KB (error)
 
@@ -92,9 +92,17 @@ If you need to set environment variables:
 - Ensure TypeScript compilation succeeds locally
 - Verify Angular version compatibility
 
-### Routing Issues
-- The `vercel.json` file handles SPA routing
-- All routes redirect to `index.html` for client-side routing
+### 404 Errors / Routing Issues
+If you're getting 404 errors after deployment:
+
+1. **Check Output Directory**: Ensure `outputDirectory` in `vercel.json` points to `dist/website/browser`
+2. **SPA Routing**: The `vercel.json` and `_redirects` files handle SPA routing
+3. **Redeploy**: After fixing configuration, redeploy the project
+
+**Current Configuration:**
+- `vercel.json` uses `rewrites` for SPA routing
+- `public/_redirects` provides backup routing support
+- Output directory: `dist/website/browser` (where `index.html` is located)
 
 ### Performance Issues
 - Bundle size is optimized for production
