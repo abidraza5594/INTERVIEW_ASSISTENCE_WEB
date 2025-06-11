@@ -1,0 +1,199 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Welcome back, {{ userData?.displayName || 'User' }}!</h1>
+    <p>Manage your AI Assistant account and settings</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Account Overview -->
+    <mat-card class="overview-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>account_circle</mat-icon>
+          Account Overview
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="account-info">
+          <div class="info-item">
+            <span class="label">Email:</span>
+            <span class="value">{{ userData?.email }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Member since:</span>
+            <span class="value">{{ getFormattedDate(userData?.lastLogin) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Account status:</span>
+            <mat-chip color="primary">Active</mat-chip>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Usage Statistics -->
+    <mat-card class="usage-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>analytics</mat-icon>
+          Usage Statistics
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="usage-stats">
+          <div class="stat-item">
+            <div class="stat-value" [class]="getTimeWarningClass()">{{ getRemainingTime() }}</div>
+            <div class="stat-label">Time Remaining</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{ timeStatus?.timeLimit || 300 }}s</div>
+            <div class="stat-label">Time Limit</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" [class]="getTimeWarningClass()">{{ getUsagePercentage().toFixed(1) }}%</div>
+            <div class="stat-label">Usage</div>
+          </div>
+        </div>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="getUsagePercentage()"
+          [color]="timeStatus?.warningLevel === 'critical' ? 'warn' : 'primary'"
+          class="usage-progress">
+        </mat-progress-bar>
+        <div class="time-status" *ngIf="timeStatus">
+          <mat-chip
+            [color]="canUseService() ? 'primary' : 'warn'"
+            [class.expired-chip]="timeStatus.isExpired">
+            <mat-icon>{{ canUseService() ? 'check_circle' : 'warning' }}</mat-icon>
+            {{ canUseService() ? 'Service Available' : 'Time Expired - Purchase More Time' }}
+          </mat-chip>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- API Keys Status -->
+    <mat-card class="api-keys-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>vpn_key</mat-icon>
+          API Keys Status
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="api-status-grid">
+          <div class="api-item" [class.configured]="hasApiKey('gemini')">
+            <mat-icon>{{ hasApiKey('gemini') ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            <span>Gemini API</span>
+          </div>
+          <div class="api-item" [class.configured]="hasApiKey('mistral')">
+            <mat-icon>{{ hasApiKey('mistral') ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            <span>Mistral API</span>
+          </div>
+          <div class="api-item" [class.configured]="hasApiKey('openai')">
+            <mat-icon>{{ hasApiKey('openai') ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            <span>OpenAI API</span>
+          </div>
+          <div class="api-item" [class.configured]="hasApiKey('openrouter')">
+            <mat-icon>{{ hasApiKey('openrouter') ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+            <span>OpenRouter API</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="api-actions">
+          <a mat-button routerLink="/api-keys" color="primary">
+            <mat-icon>settings</mat-icon>
+            Manage API Keys
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Quick Actions -->
+    <mat-card class="actions-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>flash_on</mat-icon>
+          Quick Actions
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="action-buttons">
+          <a mat-raised-button color="primary" routerLink="/download">
+            <mat-icon>download</mat-icon>
+            Download App
+          </a>
+          <a mat-button routerLink="/documentation">
+            <mat-icon>description</mat-icon>
+            Documentation
+          </a>
+          <a mat-button routerLink="/api-keys">
+            <mat-icon>vpn_key</mat-icon>
+            API Keys
+          </a>
+          <a mat-button routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            Profile
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Pricing Information -->
+    <mat-card class="pricing-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>monetization_on</mat-icon>
+          Pricing
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="pricing-info">
+          <div class="price-display">
+            <span class="currency">{{ pricing.currency }}</span>
+            <span class="amount">{{ pricing.sessionPrice }}</span>
+            <span class="period">per session</span>
+          </div>
+          <p>Pay only for what you use. No monthly subscriptions or hidden fees.</p>
+          <a mat-button routerLink="/pricing" color="primary">
+            View Pricing Details
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Recent Activity -->
+    <mat-card class="activity-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>history</mat-icon>
+          Recent Activity
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="activity-list">
+          <div class="activity-item">
+            <mat-icon>login</mat-icon>
+            <div class="activity-details">
+              <div class="activity-title">Last Login</div>
+              <div class="activity-time">{{ getFormattedDate(userData?.lastLogin) }}</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <mat-icon>vpn_key</mat-icon>
+            <div class="activity-details">
+              <div class="activity-title">API Keys</div>
+              <div class="activity-time">{{ getConfiguredKeysCount() }} configured</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <mat-icon>timer</mat-icon>
+            <div class="activity-details">
+              <div class="activity-title">Time Usage</div>
+              <div class="activity-time">{{ userData?.timeUsage || 0 }}s used</div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

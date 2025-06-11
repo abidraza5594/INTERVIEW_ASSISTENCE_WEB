@@ -1,0 +1,254 @@
+.dashboard-container {
+  min-height: 100vh;
+  padding: 80px 24px 24px;
+  background-color: #f5f5f5;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 32px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.dashboard-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.overview-card {
+  grid-column: span 2;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-weight: 500;
+  color: #666;
+}
+
+.value {
+  color: #333;
+}
+
+.usage-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #3f51b5;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+.usage-progress {
+  height: 8px;
+  border-radius: 4px;
+}
+
+.api-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.api-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.api-item.configured {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.api-item mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.api-actions {
+  margin-top: 16px;
+}
+
+.time-status {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.time-low {
+  color: #ff9800 !important;
+}
+
+.time-medium {
+  color: #ff5722 !important;
+}
+
+.time-high {
+  color: #f44336 !important;
+}
+
+.time-critical {
+  color: #d32f2f !important;
+  font-weight: bold;
+}
+
+.expired-chip {
+  background-color: #ffebee !important;
+  color: #d32f2f !important;
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.action-buttons a {
+  justify-content: center;
+}
+
+.pricing-info {
+  text-align: center;
+}
+
+.price-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.currency {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.amount {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #3f51b5;
+}
+
+.period {
+  font-size: 1rem;
+  color: #666;
+}
+
+.pricing-info p {
+  color: #666;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.activity-item mat-icon {
+  color: #3f51b5;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.activity-details {
+  flex: 1;
+}
+
+.activity-title {
+  font-weight: 500;
+  color: #333;
+}
+
+.activity-time {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 80px 16px 16px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-card {
+    grid-column: span 1;
+  }
+
+  .usage-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .api-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+}

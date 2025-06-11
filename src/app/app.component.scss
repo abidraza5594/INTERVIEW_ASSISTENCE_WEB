@@ -1,0 +1,35 @@
+// App Component Styles
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 72px; // Account for fixed header height
+  min-height: calc(100vh - 72px);
+}
+
+// Smooth scrolling for anchor links
+html {
+  scroll-padding-top: 72px;
+}
+
+// Focus styles for accessibility
+*:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+// Selection styles
+::selection {
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-900);
+}
+
+::-moz-selection {
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-900);
+}
